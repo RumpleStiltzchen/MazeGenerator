@@ -10,7 +10,7 @@ function Cell(x, y)
     var i = this.x * w;
     var j = this.y * w;
     noStroke();
-    fill(255, 0, 255, 100);
+    fill(255, 0, 255, 20);
     rect(i, j, w, w)
     
   }
