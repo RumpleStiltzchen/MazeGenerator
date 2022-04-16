@@ -1,2 +1,2 @@
-# Website
-RandomTest
+# Maze Generator!
+Generating Mazes!
