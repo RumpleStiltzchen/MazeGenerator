@@ -5,12 +5,12 @@ function Cell(x, y)
   this.walls = [true, true, true, true];
   this.visited = false;
   
-  this.highlight = function()
+  this.highlight = function(r, g, b, a )
   {
     var i = this.x * w;
     var j = this.y * w;
     noStroke();
-    fill(255, 0, 255, 20);
+    fill(r, g, b, a);
     rect(i, j, w, w)
     
   }
@@ -33,7 +33,7 @@ function Cell(x, y)
         if(this.visited)
         {
           noStroke();
-          fill(0, 255, 0, 75);
+          fill(0, 255, 0, 255);
           //rect(x,y,w,w);
         
         }
