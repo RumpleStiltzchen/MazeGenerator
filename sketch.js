@@ -16,7 +16,7 @@ function setup() {
   createCanvas(800, 800);
   cols = floor(width/w);
   rows = floor(height/w);
-  frameRate(500);
+  frameRate(750);
   stroke(0);
   
   for (var y = 0; y < rows; y++)
@@ -97,7 +97,7 @@ function draw() {
 
       
       //point(mouseX, mouseY);
-      if(counter % 10 == 0)
+      if(counter % 5 == 0)
         {
           pointX.push(mouseX);
           pointY.push(mouseY);
