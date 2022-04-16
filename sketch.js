@@ -1,5 +1,5 @@
 var cols, rows;
-var w = 20;
+var w = 40;
 
 var grid = [];
 var stack = [];
@@ -10,7 +10,7 @@ function setup() {
   createCanvas(800, 800);
   cols = floor(width/w);
   rows = floor(height/w);
-  frameRate(1000);
+  frameRate(100000000);
   
   for (var y = 0; y < rows; y++)
     {
@@ -30,12 +30,20 @@ function draw() {
   for (var i = 0; i < grid.length; i++)
     {
       grid[i].show();
+      if(i == 0 )
+        {
+          grid[i].highlight(0, 255, 0, 100);
+        }
+      if(i == grid.length -1)
+        {
+          grid[i].highlight(255, 0, 0, 100);
+        }
       
     }
   if(current)
     {
   current.visited = true;
-  current.highlight();
+  current.highlight(255, 0, 255, 20);
   var next = current.checkNeighbors();
   if(next)
     {
