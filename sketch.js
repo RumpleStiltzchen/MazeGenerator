@@ -1,16 +1,23 @@
 var cols, rows;
-var w = 20;
+var w = 40;
 
 var grid = [];
 var stack = [];
 
+var pointX = [];
+var pointY = [];
 var current;
+
+var counter = 0;
+
+var mouseDown = false;
 
 function setup() {
   createCanvas(800, 800);
   cols = floor(width/w);
   rows = floor(height/w);
-  frameRate(100000000);
+  frameRate(500);
+  stroke(0);
   
   for (var y = 0; y < rows; y++)
     {
@@ -25,8 +32,23 @@ function setup() {
 }
 
 function draw() {
+  counter += 1;
   background(255);
   
+  strokeWeight(1)
+  for(var i = 0; i < pointX.length; i++)
+        {
+          
+          
+          if(i != 0)
+            {
+              line(pointX[i -1], pointY[i -1], pointX[i], pointY[i]);
+            }else if ( i == 0)
+              {
+                line(pointX[i], pointY[i], pointX[i], pointY[i]);
+              }
+          
+        }
   for (var i = 0; i < grid.length; i++)
     {
       grid[i].show();
@@ -68,8 +90,51 @@ function draw() {
       }
   }else
     {
-      console.log("HEHE");
+      stroke(0);
+      console.log(pointX.length);
+       if(mouseDown)
+        {
+
+      
+      //point(mouseX, mouseY);
+      if(counter % 10 == 0)
+        {
+          pointX.push(mouseX);
+          pointY.push(mouseY);
+        }
+      
+        }
+
+      
+      for (var i = pointX.length; i > 0; i--)
+        {
+          if(pointX[i] == pointX[i-1] && pointY[i] == pointY[i-1])
+            {
+              pointX.splice(i - 1, 1);
+              pointY.splice(i - 1, 1);
+            }
+          
+        }
+      
     }
+  
+  
+  
+  
+ 
+  strokeWeight(1)
+  
+    
+}
+
+function mousePressed()
+{
+  mouseDown = true;
+}
+function mouseReleased()
+{
+  mouseDown = false;  
+  
 }
 
 function index(x, y)
