@@ -1,5 +1,5 @@
 var cols, rows;
-var w = 25;
+var w = 40;
 
 var grid = [];
 var stack = [];
@@ -9,7 +9,7 @@ var pointY = [];
 var current;
 
 
-var top, bottom, NotBottom;
+var top, bottom, NotBottom, openess;
 var counter = 0;
 
 var mouseDown = false;
@@ -20,7 +20,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(800, 800, WEBGL);
+  createCanvas(800, 800);
   cols = floor(width/w);
   rows = floor(height/w);
   top = floor(random(1, cols - 1));
@@ -35,9 +35,11 @@ function setup() {
   
   bottom = floor(random(1, cols + 1));
   NotBottom = floor(random(1, cols - 1));
+  openess = floor(random(2, 10));
   console.log(top);
   console.log(bottom);
   console.log(NotBottom);
+  console.log(openess);
   for (var y = 0; y < rows; y++)
     {
       for (var x = 0; x < rows; x++)
@@ -56,19 +58,13 @@ function draw() {
   background(255);
   
   strokeWeight(4);
-  stroke(255, 0, 0, 100);
+  stroke(0);
   if(current)
     {
-      //translate(0, 0);
-      let time = millis();
-      rotateX(time / 1000);
-      rotateZ(time / 1234);
-      text('loading...', 0, 0);
+      
+      text('loading...', width/2 + width/6, height/2);
     }
-  else
-    {
-      translate(-width/2, -height/2); 
-    }
+  stroke(255, 0, 0, 100);
   for(var i = 0; i < pointX.length; i++)
         {
             strokeWeight(10);
@@ -111,7 +107,7 @@ function draw() {
       {
         if(stack.length > 0)
           {
-            if(floor(random(1, 4)) == 2)
+            if(floor(random(1, openess)) == 2)
               {
                 if(current.checkNeighborsVisited())
             {
