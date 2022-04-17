@@ -1,5 +1,5 @@
 var cols, rows;
-var w = 25;
+var w = 20;
 
 var grid = [];
 var stack = [];
@@ -15,8 +15,10 @@ var counter = 0;
 var mouseDown = false;
 
 let myFont;
+let img;
 function preload() {
   myFont = loadFont('font.ttf');
+  img = loadImage('daisy16.png');
 }
 
 function setup() {
@@ -68,7 +70,8 @@ function draw() {
   for(var i = 0; i < pointX.length; i++)
         {
             strokeWeight(10);
-          point(pointX[i], pointY[i]);
+            image(img, pointX[i] - 8, pointY[i] - 8);
+          
           
           
           
@@ -132,12 +135,15 @@ function draw() {
 
       
       //point(mouseX, mouseY);
-      if(counter % 10 == 0)
+          
+      if(counter % 25 == 0)
         {
           pointX.push(mouseX);
           pointY.push(mouseY);
+
+          
         }
-      
+        
         }
         for (var i = 0; i < grid.length; i++)
     {
@@ -177,6 +183,8 @@ function draw() {
 
 function mousePressed()
 {
+  image(img, mouseX - 8, mouseY- 8);
+          
   mouseDown = true;
 }
 function mouseReleased()
@@ -226,7 +234,9 @@ function removeWalls(a,b)
       b.walls[0] = false;
       a.walls[2] = false;
     }
-  
-  
 }
+function calculateDistance(a, b)
+  {
+    return sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
+  }
 
