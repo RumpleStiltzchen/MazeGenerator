@@ -62,7 +62,7 @@ function draw() {
   if(current)
     {
       
-      text('loading...', width/2 + width/6, height/2);
+      text('loading...', width/2, height/2);
     }
   stroke(255, 0, 0, 100);
   for(var i = 0; i < pointX.length; i++)
