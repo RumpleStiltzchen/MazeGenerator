@@ -66,12 +66,12 @@ function draw() {
       
       text('loading...', width/2, height/2);
     }
-  stroke(255, 0, 0, 100);
+  stroke(255, 0, 0);
   for(var i = 0; i < pointX.length; i++)
         {
             strokeWeight(10);
-            image(img, pointX[i] - 8, pointY[i] - 8);
-          
+            //image(img, pointX[i] - 8, pointY[i] - 8);
+            point(pointX[i], pointY[i]);
           
           
           
