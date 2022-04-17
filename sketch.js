@@ -12,12 +12,22 @@ var counter = 0;
 
 var mouseDown = false;
 
+let myFont;
+function preload() {
+  myFont = loadFont('font.ttf');
+}
+
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(800, 800, WEBGL);
   cols = floor(width/w);
   rows = floor(height/w);
-  frameRate(750);
+  fill(color('#000000'));
+  textFont(myFont);
+  textSize(width/6);
+  textAlign(CENTER, CENTER);
+  frameRate(100000);
   stroke(0);
+  
   
   for (var y = 0; y < rows; y++)
     {
@@ -32,43 +42,53 @@ function setup() {
 }
 
 function draw() {
+  
   counter += 1;
   background(255);
   
-  strokeWeight(1)
+  strokeWeight(4);
+  stroke(255, 0, 0, 100);
+  if(current)
+    {
+      //translate(0, 0);
+      let time = millis();
+      rotateX(time / 1000);
+      rotateZ(time / 1234);
+      text('loading...', 0, 0);
+    }
+  else
+    {
+      translate(-width/2, -height/2); 
+    }
   for(var i = 0; i < pointX.length; i++)
         {
+            strokeWeight(10);
+          point(pointX[i], pointY[i]);
           
           
+          
+          /*
           if(i != 0)
             {
               line(pointX[i -1], pointY[i -1], pointX[i], pointY[i]);
             }else if ( i == 0)
               {
                 line(pointX[i], pointY[i], pointX[i], pointY[i]);
-              }
+              }*/
           
         }
-  for (var i = 0; i < grid.length; i++)
-    {
-      grid[i].show();
-      if(i == 0 )
-        {
-          grid[i].highlight(0, 255, 0, 100);
-        }
-      if(i == grid.length -1)
-        {
-          grid[i].highlight(255, 0, 0, 100);
-        }
-      
-    }
+    strokeWeight(4);
+  
+  
   if(current)
     {
   current.visited = true;
-  current.highlight(255, 0, 255, 20);
+  //current.highlight(255, 0, 255, 20);
+    
   var next = current.checkNeighbors();
   if(next)
     {
+      
       next.visited = true;
       
       removeWalls(current, next);
@@ -82,8 +102,18 @@ function draw() {
       {
         if(stack.length > 0)
           {
+            if(floor(random(1, 4)) == 2)
+              {
+                if(current.checkNeighborsVisited())
+            {
+              removeWalls(current, current.checkNeighborsVisited());
+              
+              
+            }
+              }
             stack.pop();
             current = stack[stack.length - 1];
+            
             
           }
         
@@ -97,14 +127,26 @@ function draw() {
 
       
       //point(mouseX, mouseY);
-      if(counter % 5 == 0)
+      if(counter % 10 == 0)
         {
           pointX.push(mouseX);
           pointY.push(mouseY);
         }
       
         }
-
+        for (var i = 0; i < grid.length; i++)
+    {
+      grid[i].show();
+      if(i == 0 )
+        {
+          grid[i].highlight(0, 255, 0, 100);
+        }
+      if(i == grid.length -1)
+        {
+          grid[i].highlight(255, 0, 0, 100);
+        }
+      
+    }
       
       for (var i = pointX.length; i > 0; i--)
         {
@@ -124,7 +166,6 @@ function draw() {
  
   strokeWeight(1)
   
-    
 }
 
 function mousePressed()
@@ -134,6 +175,15 @@ function mousePressed()
 function mouseReleased()
 {
   mouseDown = false;  
+  
+}
+function keyPressed()
+{
+  if(key == ' ')
+    {
+      pointX.splice(0, pointX.length);
+      pointY.splice(0, pointY.length);
+    }
   
 }
 
