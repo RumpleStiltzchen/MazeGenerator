@@ -1,5 +1,5 @@
 var cols, rows;
-var w = 25;
+var w = 80;
 
 var grid = [];
 var stack = [];
@@ -8,6 +8,8 @@ var pointX = [];
 var pointY = [];
 var current;
 
+
+var top, bottom, NotBottom;
 var counter = 0;
 
 var mouseDown = false;
@@ -21,6 +23,9 @@ function setup() {
   createCanvas(800, 800, WEBGL);
   cols = floor(width/w);
   rows = floor(height/w);
+  top = floor(random(1, cols - 1));
+  
+  
   fill(color('#000000'));
   textFont(myFont);
   textSize(width/6);
@@ -28,7 +33,11 @@ function setup() {
   frameRate(100000);
   stroke(0);
   
-  
+  bottom = floor(random(1, cols + 1));
+  NotBottom = floor(random(1, cols - 1));
+  console.log(top);
+  console.log(bottom);
+  console.log(NotBottom);
   for (var y = 0; y < rows; y++)
     {
       for (var x = 0; x < rows; x++)
@@ -121,7 +130,7 @@ function draw() {
   }else
     {
       stroke(0);
-      console.log(pointX.length);
+      
        if(mouseDown)
         {
 
@@ -137,13 +146,15 @@ function draw() {
         for (var i = 0; i < grid.length; i++)
     {
       grid[i].show();
-      if(i == 0 )
+      if(i == NotBottom )
         {
           grid[i].highlight(0, 255, 0, 100);
+          grid[i].walls = [false, grid[i].walls[1], grid[i].walls[2], grid[i].walls[3]];
         }
-      if(i == grid.length -1)
+      if(i == grid.length - bottom)
         {
           grid[i].highlight(255, 0, 0, 100);
+          grid[i].walls = [grid[i].walls[0], grid[i].walls[1], false, grid[i].walls[3]];
         }
       
     }
