@@ -1,4 +1,4 @@
-var cols, rows;
+var cols, rows, sx, sy, ex, ey;
 var w = 20;
 
 var grid = [];
@@ -7,6 +7,7 @@ var stack = [];
 var pointX = [];
 var pointY = [];
 var current;
+
 
 
 var top, bottom, NotBottom, openess;
@@ -26,10 +27,17 @@ function setup() {
   cols = floor(width/w);
   rows = floor(height/w);
   top = floor(random(1, cols - 1));
-  //OpenessSlider = createSlider(2, 10, 4);
+  difficultySlider = createSlider(5, 80, 20);
+  linesizeSlider = createSlider(1, 20, 1)
   Regenerate = createButton("Regenerate");
   Regenerate.mousePressed(Regen);
-  
+  sx = random(0, cols);
+  sy = random(0, rows);
+  ex = random(0, cols);
+  ey = random(0, rows);
+  linesizeSlider.position(435, 800);
+  difficultySlider.position(180, 800);
+  Regenerate.position(350, 800)
   fill(color('#000000'));
   textFont(myFont);
   textSize(width/6);
@@ -55,10 +63,12 @@ function setup() {
 
 function draw() {
   
+  w = difficultySlider.value();
+  difficultySlider.changed(Regen);
   counter += 1;
   background(255);
-  
-  strokeWeight(4);
+  var linethickness = float(linesizeSlider.value());
+  strokeWeight(linethickness);
   stroke(0);
 
   while(current)
@@ -107,17 +117,13 @@ function draw() {
       
         for (var i = 0; i < grid.length; i++)
     {
+      
+      if(grid[i].x == floor(sx) && grid[i].y == floor(sy) )
+        grid[i].highlight(0, 255, 0, 255);
+      if(grid[i].x == floor(ex) && grid[i].y == floor(ey) )
+        grid[i].highlight(255, 0, 0, 255);
       grid[i].show();
-      if(i == NotBottom )
-        {
-          grid[i].highlight(0, 255, 0, 100);
-          grid[i].walls = [false, grid[i].walls[1], grid[i].walls[2], grid[i].walls[3]];
-        }
-      if(i == grid.length - bottom)
-        {
-          grid[i].highlight(255, 0, 0, 100);
-          grid[i].walls = [grid[i].walls[0], grid[i].walls[1], false, grid[i].walls[3]];
-        }
+      
       
     }
       
@@ -143,6 +149,12 @@ function draw() {
 
 function Regen()
 {
+  cols = floor(width/w);
+  rows = floor(height/w);
+  sx = random(0, cols);
+  sy = random(0, rows);
+  ex = random(0, cols);
+  ey = random(0, rows);
   grid = [];
   for (var y = 0; y < rows; y++)
     {
@@ -152,6 +164,7 @@ function Regen()
           grid.push(cell);
         }
     }
+  
   
   current = grid[0];
 }
