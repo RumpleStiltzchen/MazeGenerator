@@ -11,7 +11,7 @@ var current;
 
 var top, bottom, NotBottom, openess;
 var counter = 0;
-
+var OpenessSlider, Regenerate;
 var mouseDown = false;
 
 let myFont;
@@ -26,7 +26,9 @@ function setup() {
   cols = floor(width/w);
   rows = floor(height/w);
   top = floor(random(1, cols - 1));
-  
+  //OpenessSlider = createSlider(2, 10, 4);
+  Regenerate = createButton("Regenerate");
+  Regenerate.mousePressed(Regen);
   
   fill(color('#000000'));
   textFont(myFont);
@@ -37,11 +39,8 @@ function setup() {
   
   bottom = floor(random(1, cols + 1));
   NotBottom = floor(random(1, cols - 1));
-  openess = floor(random(2, 10));
-  console.log(top);
-  console.log(bottom);
-  console.log(NotBottom);
-  console.log(openess);
+  openess = 100; //floor(random(2, 10));
+  
   for (var y = 0; y < rows; y++)
     {
       for (var x = 0; x < rows; x++)
@@ -61,34 +60,10 @@ function draw() {
   
   strokeWeight(4);
   stroke(0);
-  if(current)
+
+  while(current)
     {
-      
-      text('loading...', width/2, height/2);
-    }
-  stroke(255, 0, 0);
-  for(var i = 0; i < pointX.length; i++)
-        {
-            strokeWeight(10);
-            //image(img, pointX[i] - 8, pointY[i] - 8);
-            point(pointX[i], pointY[i]);
-          
-          
-          
-          /*
-          if(i != 0)
-            {
-              line(pointX[i -1], pointY[i -1], pointX[i], pointY[i]);
-            }else if ( i == 0)
-              {
-                line(pointX[i], pointY[i], pointX[i], pointY[i]);
-              }*/
-          
-        }
-    strokeWeight(4);
-  
-  
-  if(current)
+      if(current)
     {
   current.visited = true;
   //current.highlight(255, 0, 255, 20);
@@ -110,7 +85,7 @@ function draw() {
       {
         if(stack.length > 0)
           {
-            if(floor(random(1, openess)) == 2)
+            if(floor(random(1, openess) == 2))
               {
                 if(current.checkNeighborsVisited())
             {
@@ -126,25 +101,10 @@ function draw() {
           }
         
       }
-  }else
-    {
+  }
+    }
       stroke(0);
       
-       if(mouseDown)
-        {
-
-      
-      //point(mouseX, mouseY);
-          
-      if(counter % 25 == 0)
-        {
-          pointX.push(mouseX);
-          pointY.push(mouseY);
-
-          
-        }
-        
-        }
         for (var i = 0; i < grid.length; i++)
     {
       grid[i].show();
@@ -171,7 +131,7 @@ function draw() {
           
         }
       
-    }
+    
   
   
   
@@ -179,6 +139,21 @@ function draw() {
  
   strokeWeight(1)
   
+}
+
+function Regen()
+{
+  grid = [];
+  for (var y = 0; y < rows; y++)
+    {
+      for (var x = 0; x < rows; x++)
+        {
+          var cell = new Cell(x, y);
+          grid.push(cell);
+        }
+    }
+  
+  current = grid[0];
 }
 
 function mousePressed()
